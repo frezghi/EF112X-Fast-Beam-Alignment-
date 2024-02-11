@@ -1,4 +1,6 @@
-#Fast Beam alignment for 6g
+Fast Beam alignment for 6g
+--------------------------
+
 Future data-hungry 6G applications such as holographic telepresence, wireless extended reality, and
 autonomous vehicles are expected to be supported by higher frequency bands, e.g., millimeter wave
 and terahertz bands. However, these bands suffer from high penetration loss through blockages. To
