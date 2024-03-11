@@ -4,13 +4,13 @@ import math
 from Generate_channel import generate_channel
 import pickle
 
-num_antenna_bs = 100
+num_antenna_bs = 64
 Rician_factor = 10
 Pt_dB = -5 # Transmit power in dB
 Pt = 10**(Pt_dB/10)
 noise_power = 10**(-90/10 - 3) # Noise power: -90 dBm
 num_samples = 5000 # Size of dataset
-time_slots = 2 # time_slots for pilot transmission
+time_slots = 4 # time_slots for pilot transmission
 
 #code_book = dft(num_antenna_bs)
 
@@ -49,8 +49,13 @@ for ii in range(num_samples):
     
     # convert complex vector into real-valued vector, as neural networks only support real-valued input
     y_bs = np.concatenate([y_bs.real, y_bs.imag], axis=1) # shape: (time_slots, 2)
-    y_bs = y_bs.reshape(time_slots, 2, 1) # Input to CNN requies 3 dimensions. You can modify it if you use other neural networks
+    #y_bs = y_bs.reshape(time_slots, 2, 1) # Input to CNN requies 3 dimensions. You can modify it if you use other neural networks
     data_set_input.append(y_bs)
+    
+    # print(data_set_input[0][0])
+    # print(data_set_input[0])
+    # exit()
+
                                
     #=========================== Output: optimal beam index ==================
     Rate_max = 0
@@ -74,7 +79,9 @@ for ii in range(num_samples):
             Beam_index_optimal = i
     
     data_set_label.append(Beam_index_optimal)
- 
+
+np.save('data/data_input.npy', data_set_input)
+np.save('data/data_label.npy', data_set_label) 
     
 
 
