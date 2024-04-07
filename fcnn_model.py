@@ -42,7 +42,7 @@ class ComplexDataset(torch.utils.data.Dataset):
         return sample, label
 
 
-# Initialize your dataset and dataloader
+# Initialize dataset and dataloader
 train_dataset = ComplexDataset(X_train, y_train)
 train_loader = torch.utils.data.DataLoader(train_dataset, batch_size=32, shuffle=True)
 
@@ -79,7 +79,7 @@ num_samples = 0
 
 with torch.no_grad():
     for inputs, labels, transmission in zip(test_loader.dataset.data, test_loader.dataset.labels, transmission_test):
-        inputs = inputs.view(1, -1)  # Flatten the input tensor
+        inputs = inputs.view(1, -1)
         outputs = model(inputs)
         _, predicted = torch.max(outputs, 1)
         
