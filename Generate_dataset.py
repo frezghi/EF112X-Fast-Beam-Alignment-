@@ -53,6 +53,7 @@ def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_
         # convert complex vector into real-valued vector, as neural networks only support real-valued input
         y_bs = np.concatenate([y_bs.real, y_bs.imag], axis=1) # shape: (time_slots, 2)
         #y_bs = y_bs.reshape(time_slots, 2, 1) # Input to CNN requies 3 dimensions. You can modify it if you use other neural networks
+        print(y_bs.shape, y_bs)
         data_set_input.append(y_bs)
         
         # print(data_set_input[0][0])
@@ -92,7 +93,7 @@ def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_
     np.save('data/data_label_transmission.npy', np.array(data_set_label_transmisson))
     return
 
-generate_data(num_samples=20000)
+generate_data(num_samples=20)
 
     
 
