@@ -13,7 +13,7 @@ time_slots = 4 # time_slots for pilot transmission
 
 #code_book = dft(num_antenna_bs)
 
-def generate_data(num_antenna = 64, Rician_factor = 10, Pt_dB = -5, noise_power_in_dB = -90, num_samples = 5000, time_slots = 4):
+def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_in_dB = -90, num_samples = 5000, time_slots = 4):
     Pt = 10**(Pt_dB/10)
     noise_power = 10**(noise_power_in_dB/10 - 3)
     code_book = np.zeros((num_antenna_bs, num_antenna_bs), dtype=complex)
@@ -24,6 +24,7 @@ def generate_data(num_antenna = 64, Rician_factor = 10, Pt_dB = -5, noise_power_
     #-----------------------------------------------------------------------------
     data_set_input = []
     data_set_label = []
+    data_set_label_transmisson = []
 
     for ii in range(num_samples):
         
@@ -62,6 +63,7 @@ def generate_data(num_antenna = 64, Rician_factor = 10, Pt_dB = -5, noise_power_
         #=========================== Output: optimal beam index ==================
         Rate_max = 0
         Beam_index_optimal = 0
+        sample_transmissions = []
         for i in range(num_antenna_bs):
         
             beam = code_book[:, i]
@@ -75,19 +77,23 @@ def generate_data(num_antenna = 64, Rician_factor = 10, Pt_dB = -5, noise_power_
             SNR = Pt * (np.abs(np.squeeze(h_w)) **2) / noise_power
             
             Rate = math.log2(1 + SNR)
+
+            sample_transmissions.append(Rate)
             
             if Rate > Rate_max:
                 Rate_max = Rate
                 Beam_index_optimal = i
         
+        data_set_label_transmisson.append(sample_transmissions)
         data_set_label.append(Beam_index_optimal)
     
-    print(data_set_input[0].shape)
-    return np.array(data_set_input), np.array(data_set_label)
+    np.save('data/data_input.npy', np.array(data_set_input))
+    np.save('data/data_label.npy', np.array(data_set_label))
+    np.save('data/data_label_transmission.npy', np.array(data_set_label_transmisson))
+    return
 
+generate_data(num_samples=20000)
 
-""" np.save('data/data_input.npy', data_set_input)
-np.save('data/data_label.npy', data_set_label)  """
     
 
 
