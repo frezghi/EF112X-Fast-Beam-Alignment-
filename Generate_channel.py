@@ -22,8 +22,8 @@ def generate_channel(num_antenna_bs, location_bs=np.array([0, 0, 0]), Rician_fac
 
     # Get the location of user
     location_user = np.empty([1, 3])
-    x = np.random.uniform(-25, 25)
-    y = np.random.uniform(100, 150)
+    x = np.random.uniform(-100, 100)
+    y = np.random.uniform(50, 150)
     z = 0
     location_user = np.array([x, y, z])
 
