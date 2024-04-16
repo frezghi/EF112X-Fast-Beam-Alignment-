@@ -3,17 +3,14 @@ from scipy.linalg import dft
 import math
 from Generate_channel import generate_channel
 
-num_antenna_bs = 64
 Rician_factor = 10
 Pt_dB = -5 # Transmit power in dB
 Pt = 10**(Pt_dB/10)
 noise_power = 10**(-90/10 - 3) # Noise power: -90 dBm
-num_samples = 5000 # Size of dataset
-time_slots = 4 # time_slots for pilot transmission
 
 #code_book = dft(num_antenna_bs)
 
-def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_in_dB = -90, num_samples = 5000, time_slots = 4):
+def generate_data(num_antenna_bs = 32, Rician_factor = 10, Pt_dB = -5, noise_power_in_dB = -90, num_samples = 5000, time_slots = 3):
     Pt = 10**(Pt_dB/10)
     noise_power = 10**(noise_power_in_dB/10 - 3)
     code_book = np.zeros((num_antenna_bs, num_antenna_bs), dtype=complex)
@@ -53,7 +50,7 @@ def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_
         # convert complex vector into real-valued vector, as neural networks only support real-valued input
         y_bs = np.concatenate([y_bs.real, y_bs.imag], axis=1) # shape: (time_slots, 2)
         #y_bs = y_bs.reshape(time_slots, 2, 1) # Input to CNN requies 3 dimensions. You can modify it if you use other neural networks
-        print(y_bs.shape, y_bs)
+        #print(y_bs.shape, y_bs)
         data_set_input.append(y_bs)
         
         # print(data_set_input[0][0])
@@ -93,7 +90,8 @@ def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_
     np.save('data/data_label_transmission.npy', np.array(data_set_label_transmisson))
     return
 
-generate_data(num_samples=20)
+generate_data(num_samples=10000)
+print("Done!")
 
     
 
