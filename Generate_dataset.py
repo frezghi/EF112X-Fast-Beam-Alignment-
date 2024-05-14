@@ -11,6 +11,7 @@ noise_power = 10**(-90/10 - 3) # Noise power: -90 dBm
 #code_book = dft(num_antenna_bs)
 
 def generate_data(num_antenna_bs = 32, Rician_factor = 10, Pt_dB = -5, noise_power_in_dB = -90, num_samples = 5000, time_slots = 3):
+    print("Generating data...")
     Pt = 10**(Pt_dB/10)
     noise_power = 10**(noise_power_in_dB/10 - 3)
     code_book = np.zeros((num_antenna_bs, num_antenna_bs), dtype=complex)
@@ -85,13 +86,13 @@ def generate_data(num_antenna_bs = 32, Rician_factor = 10, Pt_dB = -5, noise_pow
         data_set_label_transmisson.append(sample_transmissions)
         data_set_label.append(Beam_index_optimal)
     
-    np.save('data/data_input.npy', np.array(data_set_input))
-    np.save('data/data_label.npy', np.array(data_set_label))
-    np.save('data/data_label_transmission.npy', np.array(data_set_label_transmisson))
-    return
+    # np.save('data/data_input.npy', np.array(data_set_input))
+    # np.save('data/data_label.npy', np.array(data_set_label))
+    # np.save('data/data_label_transmission.npy', np.array(data_set_label_transmisson))
+    print("Done!")
+    return np.array(data_set_input), np.array(data_set_label), np.array(data_set_label_transmisson)
 
-generate_data(num_samples=10000)
-print("Done!")
+#generate_data(num_samples=100000, num_antenna_bs=100, time_slots=6)
 
     
 

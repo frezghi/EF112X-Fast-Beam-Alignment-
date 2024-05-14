@@ -3,7 +3,7 @@ from scipy.linalg import dft
 import math
 from Generate_channel import generate_channel
 
-num_antenna_bs = 32
+num_antenna_bs = 64
 Rician_factor = 10
 Pt_dB = -5 # Transmit power in dB
 Pt = 10**(Pt_dB/10)
@@ -13,7 +13,7 @@ time_slots = 4 # time_slots for pilot transmission
 
 #code_book = dft(num_antenna_bs)
 
-def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_in_dB = -90, num_samples = 5000, time_slots = 4):
+def generate_data(num_antenna = 64, Rician_factor = 10, Pt_dB = -5, noise_power_in_dB = -90, num_samples = 5000, time_slots = 4):
     Pt = 10**(Pt_dB/10)
     noise_power = 10**(noise_power_in_dB/10 - 3)
     code_book = np.zeros((num_antenna_bs, num_antenna_bs), dtype=complex)
@@ -92,4 +92,4 @@ def generate_data(num_antenna = 32, Rician_factor = 10, Pt_dB = -5, noise_power_
     np.save('data/data_label_transmission_complex.npy', np.array(data_set_label_transmisson))
     return
 
-generate_data(num_samples=2000)
+generate_data(num_samples=10000)
